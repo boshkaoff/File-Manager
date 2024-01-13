@@ -27,19 +27,18 @@ namespace F_LOGIC {
 
 		void CallMainFL(int Command);
 		
-		void OpenFile();
-		void CreateNewFile();
-		void DeleteSFile();
-		void RenameFile();
-		void MoveFileToAnotherDirectory();
-		void WritePath();
+		void OpenFile(const std::string program_name);
+		void CreateNewFile(const std::string program_name);
+		void DeleteSFile(const std::string program_name);
+		void RenameFile(const std::string program_name, const std::string new_program_name);
+		void MoveFileToAnotherDirectory(const std::string program_name, std::string new_path);
+		void WritePath(std::string temp);
 		void FileLists(std::vector<std::string>& current_files_list, std::string curr_path);
 
 		std::string GetPath() { return current_path; }
 
 	private:
 		std::string current_path = "C:\\";
-		bool IsPathValid(const std::string& path);
 	};
 }
 
