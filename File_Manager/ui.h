@@ -19,6 +19,7 @@ namespace UI {
 	{
 	public:
 		std::vector<std::string> current_files_list;
+		
 
 		void CommandList();
 		int CallMainUI(std::string curr_path);

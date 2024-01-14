@@ -1,43 +1,9 @@
 ﻿#include "files_logic.h"
 
-void CleanBuffer()
-{
-    while (std::cin.peek() == '\n')
-        std::cin.ignore();
-}
 
 static bool IsPathValid(const std::string& path)
 {
     return std::filesystem::exists(path);
-}
-
-void F_LOGIC::filesLogic::CallMainFL(int Command)
-{
-    switch (Command) {
-    case 0:
-        break;
-    case Open:
-        OpenFile();
-        break;
-    case Create:
-        CreateNewFile();
-        break;
-    case Delete:
-        DeleteSFile();
-        break;
-    case Rename:
-        RenameFile();
-        break;
-    case Move:
-        MoveFileToAnotherDirectory();
-        break;
-    case Path:
-        WritePath();
-        break;
-    default:
-        std::cout << "Invalid command!" << std::endl;
-        break;
-    }
 }
 
 void F_LOGIC::filesLogic::OpenFile(const std::string program_name)
