@@ -20,8 +20,8 @@ namespace UI {
 	public:
 		std::vector<std::string> current_files_list;
 		
+		void HelloPrint(std::string curr_path);
+		void ShowFileList(std::string curr_path);
 
-		void CommandList();
-		int CallMainUI(std::string curr_path);
 	};
 }

@@ -4,12 +4,13 @@
 int main() {
 
 	APP::MainApp proc;
-	do {
+	while (proc.Is_Running())
+	{
 		proc.Run();
 		std::cout << "\nPress any key to continue...";
 		char key = _getch();
 		system("cls");
-	} while (proc.Is_Running());
+	}
 
 	return 0;
 }

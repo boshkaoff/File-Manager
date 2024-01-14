@@ -8,11 +8,11 @@ void CleanBuffer()
 
 void APP::MainApp::Start()
 {
-	current_path = F_LOGIC::filesLogic::GetPath();
-    std::cout << "WriteUrCommand IF YOUR PATH OR NAME HAS BACKSPASES WRITE IT IN COVICHKI: ";
+	current_path = filesLogic::GetPath();
+    uiClass::HelloPrint(current_path);
     std::getline(std::cin, command);
     state = processCommands(command);
-	if (state == 7) { Exit(); std::cout << "Bye!"; return; }
+	if (state == 8) { Exit(); std::cout << "Bye!"; return; }
     MainFunc(state);
 	state = 0;
 }
@@ -38,15 +38,32 @@ void APP::MainApp::MainFunc(int command)
     case Rename:
         filesLogic::RenameFile(arg1, arg2);
         break;
+    case ShowF:
+        filesLogic::ShowFileList(current_path);
+        break;
+    case HelpEn:
+        Help();
+        break;
     default:
         std::cout << "Invalid command!" << std::endl;
         break;
     }
 }
 
+void APP::MainApp::Help()
+{
+    for (size_t i = 0; i < command_list.size(); i++)
+    {
+        std::cout << "-\n";
+        std::cout << "NAME: " + command_list[i] + " | USAGE: " + command_usage[i] + " | DESC: " + command_desc[i] << std::endl;
+    }
+}
+
 int APP::MainApp::processCommands(std::string command_line)
 {
     std::istringstream check(command_line);
+
+    if (command_line[0] != '/') { return -1; }
 
     check >> command;
     bool is_exist = false;
@@ -109,15 +126,3 @@ int APP::MainApp::processArg(std::string commmand_line, int iteration, int arg_n
     return iteration;
 }
 
-
-//if (i < 4)
-//{
-//    check >> arg1;
-//    arg2 = "";
-//    break;
-//}
-//else
-//{
-//    check >> arg1 >> arg2;
-//    break;
-//}

@@ -8,11 +8,7 @@ static bool IsPathValid(const std::string& path)
 
 void F_LOGIC::filesLogic::OpenFile(const std::string program_name)
 {
-    //std::cout << "Write file name with extension (like 'file_name.txt'): ";
-    //CleanBuffer();
-    //// getting file name
-    //std::string program_name;
-    //std::getline(std::cin, program_name);
+
     
     // file path correction
     std::string file_path = current_path + "\\" + program_name;
@@ -42,11 +38,6 @@ void F_LOGIC::filesLogic::OpenFile(const std::string program_name)
 
 void F_LOGIC::filesLogic::CreateNewFile(const std::string program_name)
 {
-    //std::cout << "Write file name with extension (like 'file_name.txt'): ";
-    //CleanBuffer();
-    ////get file name
-    //std::string program_name;
-    //std::getline(std::cin, program_name);
 
     // file path correction
     std::string file_path = current_path + "\\" + program_name;
@@ -67,11 +58,6 @@ void F_LOGIC::filesLogic::CreateNewFile(const std::string program_name)
 
 void F_LOGIC::filesLogic::DeleteSFile(const std::string program_name)
 {
-    //std::cout << "Write file name with extension (like 'file_name.txt'): ";
-    //CleanBuffer();
-    ////get file name
-    //std::string program_name;
-    //std::getline(std::cin, program_name);
 
     // file path correction
     std::string file_path = current_path + "\\" + program_name;
@@ -97,17 +83,6 @@ void F_LOGIC::filesLogic::DeleteSFile(const std::string program_name)
 
 void F_LOGIC::filesLogic::RenameFile(const std::string program_name, const std::string new_program_name)
 {
-    //std::cout << "Write file name with extension (like 'file_name.txt'): ";
-    //CleanBuffer();
-    //// getting file name
-    //std::string program_name;
-    //std::getline(std::cin, program_name);
-    //std::cout << "Write new name with extension (like 'file_name.txt'): ";
-    //CleanBuffer();
-    //// getting new file name
-    //std::string new_program_name;
-    //std::getline(std::cin, new_program_name);
-    //std::string new_file_path = current_path + "\\" + new_program_name;
     std::string file_path = current_path + "\\" + program_name;
     if (!std::filesystem::exists(file_path)) { std::cout << "This file doesn't exist!\n"; return; }
     std::string new_file_path = current_path + "\\" + new_program_name;
@@ -124,19 +99,7 @@ void F_LOGIC::filesLogic::RenameFile(const std::string program_name, const std::
 
 void F_LOGIC::filesLogic::MoveFileToAnotherDirectory(const std::string program_name, std::string new_path)
 {
-    //std::cout << "Write file name with extension (like 'file_name.txt'): ";
-    //CleanBuffer();
-    //// getting file name
-    //std::string program_name;
-    //std::getline(std::cin, program_name);
-    //if (!std::filesystem::exists(file_path)) { std::cout << "This file doesn't exist!"; return; }
-    //std::cout << "Write new path";
-    //CleanBuffer();
-    //// getting new file name
-    //std::string new_path;
-    //std::getline(std::cin, new_path); 
-    //if (!IsPathValid(new_path)) { "This path doesn't exist!";}
-    //std::string new_file_path = new_path + "\\" + program_name;
+
     std::string file_path = current_path + "\\" + program_name;
     if (!std::filesystem::exists(file_path)) { std::cout << "This file doesn't exist!\n"; return; }
     if (!IsPathValid(new_path)) { "This path doesn't exist!\n"; }
@@ -154,10 +117,7 @@ void F_LOGIC::filesLogic::MoveFileToAnotherDirectory(const std::string program_n
 
 void F_LOGIC::filesLogic::WritePath(std::string temp)
 {
-    //std::cout << "Enter path: ";
-    //std::string temp;
-    //std::cin >> temp;
-    // было так
+
 
     // checking path is ok
     std::filesystem::path cleanedPath = std::filesystem::path(temp).lexically_normal();
@@ -186,4 +146,14 @@ void F_LOGIC::filesLogic::FileLists(std::vector<std::string>& current_files_list
     }
 }
 
+void F_LOGIC::filesLogic::ShowFileList(std::string curr_path)
+{
+    filesLogic::FileLists(current_files_list, curr_path);
+    int file_num = 0;
+    for (auto& i : current_files_list)
+    {
+        std::cout << file_num << " | " << i << std::endl;
+        file_num++;
+    }
+}
 
