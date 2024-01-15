@@ -6,6 +6,8 @@
 #include <filesystem>
 #include <windows.h>
 #include <fstream>
+#include <locale>
+#include <codecvt>
 
 enum FILE_COMMANDS
 {

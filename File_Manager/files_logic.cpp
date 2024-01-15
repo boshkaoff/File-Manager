@@ -142,10 +142,18 @@ void F_LOGIC::FilesLogic::ShowFileList(std::wstring curr_path)
 {
     FilesLogic::FileLists(current_files_list, curr_path);
     int file_num = 0;
+
+    SetConsoleOutputCP(65001); 
+    SetConsoleCP(65001);
+
     std::wcout << L"_______________ Files In Current Path _______________\n";
     for (auto& i : current_files_list)
     {
-        std::wcout << L"- | " + i << std::endl;
+        int requiredSize = WideCharToMultiByte(CP_UTF8, 0, i.c_str(), -1, nullptr, 0, nullptr, nullptr);
+        std::string utf8String(requiredSize, 0);
+        WideCharToMultiByte(CP_UTF8, 0, i.c_str(), -1, &utf8String[0], requiredSize, nullptr, nullptr);
+
+        std::wcout << L"- | " << utf8String.c_str() << std::endl;
         file_num++;
     }
     std::wcout << L"_____________________________________________________\n";

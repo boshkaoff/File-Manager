@@ -1,8 +1,10 @@
 #include "app.h"	
+#include <locale>
 
 int main() {
+	SetConsoleOutputCP(1251);
+	SetConsoleCP(1251);
 
-	std::locale::global(std::locale(""));
 	APP::MainApp proc;
 	while (proc.Is_Running())
 	{
