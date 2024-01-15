@@ -16,7 +16,8 @@ enum FILE_COMMANDS
 	Move = 4,
 	Rename = 5,
 	ShowF = 6,
-	HelpEn = 7
+	HelpEn = 7,
+	Clear = 9
 };
 
 namespace F_LOGIC {
@@ -26,19 +27,19 @@ namespace F_LOGIC {
 	{
 	public:
 		
-		void OpenFile(const std::string program_name);
-		void CreateNewFile(const std::string program_name);
+		void OpenFile(const std::string program_name) const;
+		void CreateNewFile(const std::string program_name) const;
 		void DeleteSFile(const std::string program_name);
 		void WritePath(std::string temp);
-		void ShowFileList(std::string curr_path);
+		void ShowFileList(std::wstring curr_path);
 		void RenameFile(const std::string program_name, const std::string new_program_name);
 		void MoveFileToAnotherDirectory(const std::string program_name, std::string new_path);
-		void FileLists(std::vector<std::string>& current_files_list, std::string curr_path);
+		void FileLists(std::vector<std::wstring>& current_files_list, std::wstring curr_path);
 
 		std::string GetPath() { return current_path; }
 
 	private:
-		std::vector<std::string> current_files_list;
+		std::vector<std::wstring> current_files_list;
 		std::string current_path = "C:\\";
 	
 	};

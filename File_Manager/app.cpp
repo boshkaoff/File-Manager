@@ -44,8 +44,11 @@ void APP::MainApp::MainFunc(int command)
     case HelpEn:
         Help();
         break;
+    case Clear:
+        system("cls");
+        break;
     default:
-        std::cout << "Invalid command!" << std::endl;
+        std::cout << "- Invalid command!" << std::endl;
         break;
     }
 }
@@ -57,6 +60,7 @@ void APP::MainApp::Help()
         std::cout << "-\n";
         std::cout << "NAME: " + command_list[i] + " | USAGE: " + command_usage[i] + " | DESC: " + command_desc[i] << std::endl;
     }
+    std::cout << "-\n";
 }
 
 int APP::MainApp::processCommands(std::string command_line)

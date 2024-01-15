@@ -4,6 +4,7 @@
 #include "ui.h"
 #include "files_logic.h"
 #include <vector>
+#include <conio.h>
 
 namespace APP {
 
@@ -24,6 +25,7 @@ namespace APP {
 		std::string current_path = "C:\\";
 		bool is_enabled = true;
 		void Start();
+		char key = ' ';
 
 		std::string command, arg1, arg2;
 
@@ -37,6 +39,7 @@ namespace APP {
 			"/showf",
 			"/help",
 			"/exit",
+			"/clear"
 		};
 
 		std::vector<std::string> command_usage{
@@ -49,6 +52,7 @@ namespace APP {
 			"/showf",
 			"/help",
 			"/exit",
+			"/clear"
 		};
 
 		std::vector<std::string> command_desc{
@@ -61,6 +65,7 @@ namespace APP {
 			"show all files in current directory",
 			"shows all commands",
 			"exit from program",
+			"clear console output"
 		};
 	};
 }

@@ -6,7 +6,7 @@ static bool IsPathValid(const std::string& path)
     return std::filesystem::exists(path);
 }
 
-void F_LOGIC::filesLogic::OpenFile(const std::string program_name)
+void F_LOGIC::filesLogic::OpenFile(const std::string program_name) const
 {
 
     
@@ -16,7 +16,7 @@ void F_LOGIC::filesLogic::OpenFile(const std::string program_name)
 
     if (!std::filesystem::exists(file_path) && !std::filesystem::is_regular_file(file_path)) 
     {
-        std::cerr << "File does not exist or is not a regular file: " << file_path << std::endl; 
+        std::cerr << "- File does not exist or is not a regular file: " << file_path << std::endl; 
         return;
     }
 
@@ -25,18 +25,18 @@ void F_LOGIC::filesLogic::OpenFile(const std::string program_name)
         HINSTANCE result = ShellExecuteA(nullptr, "open", file_path.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
 
         if (reinterpret_cast<uintptr_t>(result) > 32) {
-            std::cout << "App launched successful." << std::endl;
+            std::cout << "- App launched successful." << std::endl;
         }
         else {
-            std::cerr << "Failed with error code: " << reinterpret_cast<uintptr_t>(result) << std::endl;
+            std::cerr << "- Failed with error code: " << reinterpret_cast<uintptr_t>(result) << std::endl;
         }
     }
     else {
-        std::cerr << "File is not executable: " << file_path << std::endl;
+        std::cerr << "- File is not executable: " << file_path << std::endl;
     }
 }
 
-void F_LOGIC::filesLogic::CreateNewFile(const std::string program_name)
+void F_LOGIC::filesLogic::CreateNewFile(const std::string program_name) const
 {
 
     // file path correction
@@ -49,10 +49,10 @@ void F_LOGIC::filesLogic::CreateNewFile(const std::string program_name)
     //check fle
     if (file.is_open()) {
         file.close();
-        std::cout << "File created successfully.\n";
+        std::cout << "- File created successfully.\n";
     }
     else {
-        std::cerr << "Failed to create file.\n";
+        std::cerr << "- Failed to create file.\n";
     }
 }
 
@@ -61,11 +61,11 @@ void F_LOGIC::filesLogic::DeleteSFile(const std::string program_name)
 
     // file path correction
     std::string file_path = current_path + "\\" + program_name;
-    if (!std::filesystem::exists(file_path)) { std::cout << "This file doesn't exist!"; return; }
+    if (!std::filesystem::exists(file_path)) { std::cout << "- This file doesn't exist!"; return; }
 
     // check if user are sure want to delete bleat
-    std::cout << "Are you sure want to delete file: " + program_name << std::endl;
-    std::cout << "In path: " + file_path << std::endl;
+    std::cout << "- Are you sure want to delete file: " + program_name << std::endl;
+    std::cout << "- In path: " + file_path << std::endl;
     bool check;
     std::cin >> check;
 
@@ -73,27 +73,27 @@ void F_LOGIC::filesLogic::DeleteSFile(const std::string program_name)
     try {
         // Попробуйте удалить файл
         std::filesystem::remove(file_path);
-        std::cout << "File deleted.\n";
+        std::cout << "- File deleted.\n";
     }
     catch (const std::filesystem::filesystem_error& e) {
         // В случае ошибки выводим сообщение
-        std::cerr << "Error: " << e.what() << std::endl;
+        std::cerr << "- Error: " << e.what() << std::endl;
     }
 }
 
 void F_LOGIC::filesLogic::RenameFile(const std::string program_name, const std::string new_program_name)
 {
     std::string file_path = current_path + "\\" + program_name;
-    if (!std::filesystem::exists(file_path)) { std::cout << "This file doesn't exist!\n"; return; }
+    if (!std::filesystem::exists(file_path)) { std::cout << "- This file doesn't exist!\n"; return; }
     std::string new_file_path = current_path + "\\" + new_program_name;
 
     try {
         // try to rename
         std::filesystem::rename(file_path, new_file_path);
-        std::cout << "Done" << std::endl;
+        std::cout << "- Done" << std::endl;
     }
     catch (const std::filesystem::filesystem_error& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
+        std::cerr << "- Error: " << e.what() << std::endl;
     }
 }
 
@@ -101,17 +101,17 @@ void F_LOGIC::filesLogic::MoveFileToAnotherDirectory(const std::string program_n
 {
 
     std::string file_path = current_path + "\\" + program_name;
-    if (!std::filesystem::exists(file_path)) { std::cout << "This file doesn't exist!\n"; return; }
-    if (!IsPathValid(new_path)) { "This path doesn't exist!\n"; }
+    if (!std::filesystem::exists(file_path)) { std::cout << "- This file doesn't exist!\n"; return; }
+    if (!IsPathValid(new_path)) { "- This path doesn't exist!\n"; }
     std::string new_file_path = new_path + "\\" + program_name;
 
     try {
         // try to rename
         std::filesystem::rename(file_path, new_file_path);
-        std::cout << "Done\n";
+        std::cout << "- Done\n";
     }
     catch (const std::filesystem::filesystem_error& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
+        std::cerr << "- Error: " << e.what() << std::endl;
     }
 }
 
@@ -123,14 +123,14 @@ void F_LOGIC::filesLogic::WritePath(std::string temp)
     std::filesystem::path cleanedPath = std::filesystem::path(temp).lexically_normal();
     if (IsPathValid(cleanedPath.string())) {
         this->current_path = cleanedPath.string();
-        std::cout << "Done!\n";
+        std::cout << "- Done!\n";
     }
     else {
-        std::cerr << "Incorrect Path!!\n";
+        std::cerr << "- Incorrect Path!!\n";
     }
 }
 
-void F_LOGIC::filesLogic::FileLists(std::vector<std::string>& current_files_list, std::string curr_path)
+void F_LOGIC::filesLogic::FileLists(std::vector<std::wstring>& current_files_list, std::wstring curr_path)
 {
     if (!current_files_list.empty())
     {
@@ -138,22 +138,24 @@ void F_LOGIC::filesLogic::FileLists(std::vector<std::string>& current_files_list
     }
     try {
         for (const auto& entry : std::filesystem::directory_iterator(curr_path)) {
-            current_files_list.push_back(entry.path().filename().string());
+            current_files_list.push_back(entry.path().filename().wstring());
         }
     }
     catch (const std::filesystem::filesystem_error& e) {
-        std::cerr << "Error accessing directory: " << e.what() << std::endl;
+        std::wcerr << L"- Error accessing directory: " << e.what() << std::endl;
     }
 }
 
-void F_LOGIC::filesLogic::ShowFileList(std::string curr_path)
+void F_LOGIC::filesLogic::ShowFileList(std::wstring curr_path)
 {
     filesLogic::FileLists(current_files_list, curr_path);
     int file_num = 0;
+    std::wcout << L"_______________ Files In Current Path _______________\n";
     for (auto& i : current_files_list)
     {
-        std::cout << file_num << " | " << i << std::endl;
+        std::wcout << L"- | " + i << std::endl;
         file_num++;
     }
+    std::wcout << L"_____________________________________________________\n";
 }
 

@@ -1,15 +1,12 @@
 #include "app.h"	
-#include <conio.h>
 
 int main() {
 
+	std::locale::global(std::locale(""));
 	APP::MainApp proc;
 	while (proc.Is_Running())
 	{
 		proc.Run();
-		std::cout << "\nPress any key to continue...";
-		char key = _getch();
-		system("cls");
 	}
 
 	return 0;

@@ -23,5 +23,9 @@ namespace UI {
 		void HelloPrint(std::string curr_path);
 		void ShowFileList(std::string curr_path);
 
+	private:
+		bool welcome = true;
+		std::string welcome_str = "Welcome! ";
+		std::string help_str = " (type '/help' for commands list)";
 	};
 }
