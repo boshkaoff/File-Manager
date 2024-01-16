@@ -1,5 +1,6 @@
 #include "app.h"	
 #include <locale>
+#include <windows.h>
 
 int main() {
 	SetConsoleOutputCP(1251);
@@ -11,5 +12,5 @@ int main() {
 		proc.Run();
 	}
 
-	return 0;
+	return EXIT_SUCCESS;
 }

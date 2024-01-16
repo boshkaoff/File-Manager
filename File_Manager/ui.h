@@ -21,7 +21,6 @@ namespace UI {
         std::vector<std::wstring> current_files_list;
 
         void HelloPrint(std::wstring curr_path);
-        void ShowFileList(std::wstring curr_path);
 
     private:
         bool welcome = true;

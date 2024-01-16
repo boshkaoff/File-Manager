@@ -8,10 +8,12 @@
 
 namespace APP {
 
+	void CleanBuffer();
+
 	class MainApp : public UI::uiClass, public F_LOGIC::FilesLogic {
 	public:
 		void Run() { Start(); }
-		bool Is_Running() { return is_enabled; }
+		bool Is_Running() const { return is_enabled; }
 		void Exit() { is_enabled = false; }
 		void MainFunc(int command);
 		void Help();

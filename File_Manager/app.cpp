@@ -1,6 +1,6 @@
 #include "app.h"
 
-void CleanBuffer()
+void APP::CleanBuffer()
 {
     while (std::wcin.peek() == L'\n')
         std::wcin.ignore();
@@ -55,7 +55,11 @@ void APP::MainApp::MainFunc(int command)
         Help();
         break;
     case Clear:
-        system("cls");
+#ifdef _WIN32
+        std::system("cls");
+#else
+        std::system("clear");
+#endif
         break;
     default:
         std::wcout << L"- Invalid command!" << std::endl;
