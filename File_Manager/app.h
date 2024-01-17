@@ -6,28 +6,47 @@
 #include <vector>
 #include <conio.h>
 
+enum class cmd_n
+{
+	Open,
+	Create,
+	Delete,
+	Path,
+	Move,
+	Rename,
+	ShowF,
+	HelpEn,
+	Exit,
+	Clear,
+	Invalid
+};
+
 namespace APP {
 
 	void CleanBuffer();
 
 	class MainApp : public UI::uiClass, public F_LOGIC::FilesLogic {
 	public:
+
+		MainApp() : state(cmd_n::Invalid), current_path(L"C:\\"), is_enabled(true), key(L' ') {}
+
 		void Run() { Start(); }
 		bool Is_Running() const { return is_enabled; }
 		void Exit() { is_enabled = false; }
-		void MainFunc(int command);
+		void MainFunc(cmd_n command);
 		void Help();
 
-		int processCommands(std::wstring commmand_line);
+		cmd_n processCommands(std::wstring commmand_line);
 		int processArg(std::wstring commmand_line, int iteration, int arg_num);
 
 	private:
 
-		int state = 0;
-		std::wstring current_path = L"C:\\";
-		bool is_enabled = true;
+		cmd_n state;
+		std::wstring current_path;
+		bool is_enabled;
+		wchar_t key;
+
 		void Start();
-		wchar_t key = L' ';
 
 		std::wstring command, arg1, arg2;
 

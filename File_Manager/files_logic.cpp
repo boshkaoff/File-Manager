@@ -88,7 +88,7 @@ void F_LOGIC::FilesLogic::RenameFile(const std::wstring program_name, const std:
         std::wcout << L"- Done" << std::endl;
     }
     catch (const std::filesystem::filesystem_error& e) {
-        std::wcerr << L"- Error: " << e.what() << std::endl;
+        std::wcerr << L"- " << e.what() << std::endl;
     }
 }
 
@@ -105,7 +105,7 @@ void F_LOGIC::FilesLogic::MoveFileToAnotherDirectory(const std::wstring program_
         std::wcout << L"- Done\n";
     }
     catch (const std::filesystem::filesystem_error& e) {
-        std::wcerr << L"- Error: " << e.what() << std::endl;
+        std::wcerr << L"- " << e.what() << std::endl;
     }
 }
 

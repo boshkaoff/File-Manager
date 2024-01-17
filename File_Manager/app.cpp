@@ -1,5 +1,6 @@
 #include "app.h"
 
+// cleans buffer to get std::cin more correctly and without bugs
 void APP::CleanBuffer()
 {
     while (std::wcin.peek() == L'\n')
@@ -14,47 +15,48 @@ void APP::MainApp::Start()
     std::wstring command_line;
     std::getline(std::wcin, command_line);
 
-    state = processCommands(command_line);
+    // process command to get cmd state
+    cmd_n state = processCommands(command_line);
 
-    if (state == 8)
+    if (state == cmd_n::Exit)
     {
         Exit();
         std::wcout << L"Bye!" << std::endl;
         return;
     }
 
+
     MainFunc(state);
-    state = 0;
 }
 
-void APP::MainApp::MainFunc(int command)
+void APP::MainApp::MainFunc(cmd_n command)
 {
     switch (command) {
-    case Open:
+    case cmd_n::Open:
         FilesLogic::OpenFile(arg1);
         break;
-    case Create:
+    case cmd_n::Create:
         FilesLogic::CreateNewFile(arg1);
         break;
-    case Delete:
+    case cmd_n::Delete:
         FilesLogic::DeleteSFile(arg1);
         break;
-    case Path:
+    case cmd_n::Path:
         FilesLogic::WritePath(arg1);
         break;
-    case Move:
+    case cmd_n::Move:
         FilesLogic::MoveFileToAnotherDirectory(arg1, arg2);
         break;
-    case Rename:
+    case cmd_n::Rename:
         FilesLogic::RenameFile(arg1, arg2);
         break;
-    case ShowF:
+    case cmd_n::ShowF:
         FilesLogic::ShowFileList(current_path);
         break;
-    case HelpEn:
+    case cmd_n::HelpEn:
         Help();
         break;
-    case Clear:
+    case cmd_n::Clear:
 #ifdef _WIN32
         std::system("cls");
 #else
@@ -77,11 +79,11 @@ void APP::MainApp::Help()
     std::wcout << L"-\n";
 }
 
-int APP::MainApp::processCommands(std::wstring command_line)
+cmd_n APP::MainApp::processCommands(std::wstring command_line)
 {
     std::wistringstream check(command_line);
 
-    if (command_line[0] != L'/') { return -1; }
+    if (command_line[0] != L'/') { return cmd_n::Invalid; }
 
     check >> command;
     bool is_exist = false;
@@ -95,7 +97,7 @@ int APP::MainApp::processCommands(std::wstring command_line)
         }
         i++;
     }
-    if (!is_exist) { return -1; }
+    if (!is_exist) { return cmd_n::Invalid; }
 
     bool quotes = false;
 
@@ -106,13 +108,13 @@ int APP::MainApp::processCommands(std::wstring command_line)
             processArg(command_line, iterator_for, 0);
             processArg(command_line, iterator_for, 1);
             quotes = true;
-            return i;
+            return static_cast<cmd_n>(i);
         }
     }
 
     check >> arg1 >> arg2;
 
-    return i;
+    return static_cast<cmd_n>(i);
 }
 
 int APP::MainApp::processArg(std::wstring commmand_line, int iteration, int arg_num)

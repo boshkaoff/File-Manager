@@ -9,19 +9,6 @@
 #include <locale>
 #include <codecvt>
 
-enum FILE_COMMANDS
-{
-	Open = 0,
-	Create = 1,
-	Delete = 2,
-	Path = 3,
-	Move = 4,
-	Rename = 5,
-	ShowF = 6,
-	HelpEn = 7,
-	Clear = 9
-};
-
 namespace F_LOGIC {
 
 	class FilesLogic
