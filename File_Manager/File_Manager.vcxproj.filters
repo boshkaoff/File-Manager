@@ -7,6 +7,9 @@
     <Filter Include="ui">
       <UniqueIdentifier>{7027ecf5-c70d-4900-8ccf-f5e4509c3653}</UniqueIdentifier>
     </Filter>
+    <Filter Include="config">
+      <UniqueIdentifier>{7463e5e0-e3c8-434a-99b1-68928a8cbbd6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="_main.cpp" />
@@ -17,6 +20,9 @@
     <ClCompile Include="files_logic.cpp">
       <Filter>files logic</Filter>
     </ClCompile>
+    <ClCompile Include="config.cpp">
+      <Filter>config</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h" />
@@ -25,6 +31,9 @@
     </ClInclude>
     <ClInclude Include="files_logic.h">
       <Filter>files logic</Filter>
+    </ClInclude>
+    <ClInclude Include="config.h">
+      <Filter>config</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
