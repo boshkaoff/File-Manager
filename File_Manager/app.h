@@ -5,6 +5,7 @@
 #include "files_logic.h"
 #include <vector>
 #include <conio.h>
+#include "config.h"
 
 enum class cmd_n
 {
@@ -35,6 +36,7 @@ namespace APP {
 		void Exit() { is_enabled = false; }
 		void MainFunc(cmd_n command);
 		void Help();
+		void InitilizeConfig(std::wstring config_file_name = L"default");
 
 		cmd_n processCommands(std::wstring commmand_line);
 		int processArg(std::wstring commmand_line, int iteration, int arg_num);
@@ -45,6 +47,8 @@ namespace APP {
 		std::wstring current_path;
 		bool is_enabled;
 		wchar_t key;
+
+		cfg::Config configuration;
 
 		void Start();
 

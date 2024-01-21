@@ -20,11 +20,13 @@ namespace UI {
     public:
         std::vector<std::wstring> current_files_list;
 
+        void SetLanguage(std::string language) { this->language = language; }
         void HelloPrint(std::wstring curr_path);
 
     private:
         bool welcome = true;
         std::wstring welcome_str = L"Welcome! ";
         std::wstring help_str = L" (type '/help' for commands list)";
+        std::string language;
     };
 }

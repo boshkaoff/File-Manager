@@ -1,4 +1,4 @@
-#include "app.h"
+﻿#include "app.h"
 
 // cleans buffer to get std::cin more correctly and without bugs
 void APP::CleanBuffer()
@@ -9,6 +9,8 @@ void APP::CleanBuffer()
 
 void APP::MainApp::Start()
 {
+    InitilizeConfig();
+
     current_path = FilesLogic::GetPath();
     uiClass::HelloPrint(current_path);
 
@@ -77,6 +79,48 @@ void APP::MainApp::Help()
         std::wcout << L"NAME: " + command_list[i] + L" | USAGE: " + command_usage[i] + L" | DESC: " + command_desc[i] << std::endl;
     }
     std::wcout << L"-\n";
+}
+
+void APP::MainApp::InitilizeConfig(std::wstring config_file_name)
+{
+    std::wstring filename = config_file_name + L".cfg";
+
+    if (!std::filesystem::exists(filename)) { return; }
+
+    std::ifstream inputFile(filename);
+
+    if (!inputFile.is_open()) {
+        std::wcerr << L"- Can't open config: " << filename << std::endl;
+        return;
+    }
+
+    std::string line;
+    int iteration = 0;
+
+    while (std::getline(inputFile, line)) {
+
+        if (iteration == 0) 
+        {
+            configuration.SetLanguage(line);
+            iteration++;
+            continue;
+        }
+        else if (iteration == 1)
+        {
+            configuration.SetConfigName(line);
+            iteration++;
+            continue;
+        }
+
+
+        iteration++;
+    }
+
+    inputFile.close();
+
+
+    uiClass::SetLanguage("En-en");
+
 }
 
 cmd_n APP::MainApp::processCommands(std::wstring command_line)
