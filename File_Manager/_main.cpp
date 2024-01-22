@@ -1,15 +1,19 @@
 #include "app.h"	
-#include <conio.h>
+#include <locale>
+#include <windows.h>
+#include <io.h>
+#include <fcntl.h>
 
 int main() {
+	SetConsoleOutputCP(65001);
+	SetConsoleCP(65001);
+	_setmode(_fileno(stdin), _O_U16TEXT);
 
 	APP::MainApp proc;
-	do {
+	while (proc.Is_Running())
+	{
 		proc.Run();
-		std::cout << "\nPress any key to continue...";
-		char key = _getch();
-		system("cls");
-	} while (proc.Is_Running());
+	}
 
-	return 0;
+	return EXIT_SUCCESS;
 }

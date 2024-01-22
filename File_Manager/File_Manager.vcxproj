@@ -20,12 +20,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="app.cpp" />
+    <ClCompile Include="config.cpp" />
     <ClCompile Include="files_logic.cpp" />
     <ClCompile Include="ui.cpp" />
     <ClCompile Include="_main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h" />
+    <ClInclude Include="config.h" />
     <ClInclude Include="files_logic.h" />
     <ClInclude Include="ui.h" />
   </ItemGroup>

@@ -6,21 +6,27 @@
 
 enum UI_STATES
 {
-	Base = 1,
-	CreateUI = 2,
-	DeleteUI = 3,
-	RenameUI = 4,
-	MoveUI = 5,
+    Base = 1,
+    CreateUI = 2,
+    DeleteUI = 3,
+    RenameUI = 4,
+    MoveUI = 5,
 };
 
 namespace UI {
 
-	class uiClass : public F_LOGIC::filesLogic
-	{
-	public:
-		std::vector<std::string> current_files_list;
+    class uiClass : public F_LOGIC::FilesLogic
+    {
+    public:
+        std::vector<std::wstring> current_files_list;
 
-		void CommandList();
-		int CallMainUI(std::string curr_path);
-	};
+        void SetLanguage(std::string language) { this->language = language; }
+        void HelloPrint(std::wstring curr_path);
+
+    private:
+        bool welcome = true;
+        std::wstring welcome_str = L"Welcome! ";
+        std::wstring help_str = L" (type '/help' for commands list)";
+        std::string language;
+    };
 }

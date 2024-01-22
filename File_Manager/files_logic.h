@@ -6,40 +6,27 @@
 #include <filesystem>
 #include <windows.h>
 #include <fstream>
-
-enum FILE_COMMANDS
-{
-	Open = 1,
-	Create = 2,
-	Delete = 3,
-	Rename = 4,
-	Move = 5,
-	Path = 6,
-	Exit = 7
-};
+#include <locale>
+#include <codecvt>
 
 namespace F_LOGIC {
 
-
-	class filesLogic
+	class FilesLogic
 	{
 	public:
+		void OpenFile(const std::wstring program_name) const;
+		void CreateNewFile(const std::wstring program_name) const;
+		void DeleteSFile(const std::wstring program_name);
+		void WritePath(std::wstring temp);
+		void ShowFileList(std::wstring curr_path);
+		void RenameFile(const std::wstring program_name, const std::wstring new_program_name);
+		void MoveFileToAnotherDirectory(const std::wstring program_name, std::wstring new_path);
+		void FileLists(std::vector<std::wstring>& current_files_list, std::wstring curr_path);
 
-		void CallMainFL(int Command);
-		
-		void OpenFile();
-		void CreateNewFile();
-		void DeleteSFile();
-		void RenameFile();
-		void MoveFileToAnotherDirectory();
-		void WritePath();
-		void FileLists(std::vector<std::string>& current_files_list, std::string curr_path);
-
-		std::string GetPath() { return current_path; }
+		std::wstring GetPath() { return current_path; }
 
 	private:
-		std::string current_path = "C:\\";
-		bool IsPathValid(const std::string& path);
+		std::vector<std::wstring> current_files_list;
+		std::wstring current_path = L"C:\\";
 	};
 }
-
