@@ -47,6 +47,7 @@ namespace APP {
 		std::wstring current_path;
 		bool is_enabled;
 		wchar_t key;
+		bool USED_CONFIG_INITIALIZATION = false;
 
 		cfg::Config configuration;
 

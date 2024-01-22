@@ -1,10 +1,13 @@
 #include "app.h"	
 #include <locale>
 #include <windows.h>
+#include <io.h>
+#include <fcntl.h>
 
 int main() {
-	SetConsoleOutputCP(1251);
-	SetConsoleCP(1251);
+	SetConsoleOutputCP(65001);
+	SetConsoleCP(65001);
+	_setmode(_fileno(stdin), _O_U16TEXT);
 
 	APP::MainApp proc;
 	while (proc.Is_Running())
