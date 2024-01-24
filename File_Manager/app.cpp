@@ -23,7 +23,7 @@ void APP::MainApp::Start()
     if (state == cmd_n::Exit)
     {
         Exit();
-        std::wcout << L"Bye!" << std::endl;
+        std::cout << message(code::Bye) << std::endl;
         return;
     }
 
@@ -83,6 +83,7 @@ void APP::MainApp::Help()
 
 void APP::MainApp::InitilizeConfig(std::wstring config_file_name)
 {
+    // checking if already loaded config
     if (USED_CONFIG_INITIALIZATION) { return; }
     USED_CONFIG_INITIALIZATION = true;
 
@@ -92,51 +93,55 @@ void APP::MainApp::InitilizeConfig(std::wstring config_file_name)
 #else
     const char* usernameVar = "USER";
 #endif
-
     char* username = nullptr;
     size_t size;
-
     if (_dupenv_s(&username, &size, usernameVar) != 0 || username == nullptr) {
-        std::cerr << "- Fatal error: Unable to get username\n";
+        std::wcerr << L"- Fatal error: Unable to get username\n";
         return;
     }
+
 
     // convert from const char to wstring
     int bufferSize = MultiByteToWideChar(CP_UTF8, 0, username, -1, nullptr, 0);
-    std::wstring wideUsername(bufferSize, L'\0');
+    std::wstring wideUsername(username, username + size - 1);  // needs to delete "/0" 
     MultiByteToWideChar(CP_UTF8, 0, username, -1, &wideUsername[0], bufferSize);
 
-    // Construct the filename
-    std::wstring filename = L"C:\\Users\\" + wideUsername + L"\\OneDrive\\Documents\\" + config_file_name + L".cfg";
+    // creating path
+    std::wstring path = L"C:\\Users\\" + wideUsername + L"\\Documents\\";
 
-    std::ofstream file(filename);
+    // construct the filename
+    std::wstring filename = path + config_file_name + L".cfg";
 
-    if (!file.is_open()) {
-        DWORD error = GetLastError();
-        std::wcerr << L"- Can't create config file: " << filename << L", Error code: " << error << std::endl;
-        if (error == 5)
-        {
-            std::wcerr << L"- !! START PROGRAM AS ADMINISTRATOR !! -\n";
+    //creating default config if doesn`t exist
+    if (!std::filesystem::exists(filename)) {
+        std::ofstream file(filename);
+        if (!file.is_open()) {
+            DWORD error = GetLastError();
+            std::wcerr << L"- Can't create config file: " << filename << L", Error code: " << error << std::endl;
+            if (error == 5)
+            {
+                std::wcerr << L"- !! START PROGRAM AS ADMINISTRATOR !! -\n";
+                return;
+            }
+            free(username);
             return;
         }
-        free(username);
-        return;
+        file.close();
+        std::wcout << L"Config file created: " << filename << L"\n";
     }
 
-    file.close();
-    std::wcout << L"Config file created: " << filename << L"\n";
-
-    std::fstream inputFile(filename, std::ios::in | std::ios::out);
-
+    // creating object to read
+    std::fstream inputFile(filename, std::ios::in);
     if (!inputFile.is_open()) {
         std::wcerr << L"- Can't open config: " << filename << std::endl;
         free(username);
         return;
     }
+    free(username);
 
+    //reading config
     std::string line;
     int iteration = 0;
-
     while (std::getline(inputFile, line)) {
 
         if (iteration == 0) 
@@ -155,13 +160,8 @@ void APP::MainApp::InitilizeConfig(std::wstring config_file_name)
 
         iteration++;
     }
-
     inputFile.close();
-
-
-    uiClass::SetLanguage("En-en");
-    free(username);
-  
+    if (!uiClass::SetLanguage(configuration.GetLanguage())) { Exit(); return; }
 
 }
 

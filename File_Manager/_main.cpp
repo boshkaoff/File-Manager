@@ -7,7 +7,7 @@
 int main() {
 	SetConsoleOutputCP(65001);
 	SetConsoleCP(65001);
-	_setmode(_fileno(stdin), _O_U16TEXT);
+	(void)_setmode(_fileno(stdin), _O_U16TEXT);
 
 	APP::MainApp proc;
 	while (proc.Is_Running())

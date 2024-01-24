@@ -13,7 +13,7 @@ void F_LOGIC::FilesLogic::OpenFile(const std::wstring program_name) const
 
     if (!std::filesystem::exists(file_path) && !std::filesystem::is_regular_file(file_path))
     {
-        std::wcerr << L"- File does not exist or is not a regular file: " << file_path << std::endl;
+        std::wcerr << L"- File does not exist or is not a regular file: " << file_path << "\n";
         return;
     }
 
@@ -22,14 +22,14 @@ void F_LOGIC::FilesLogic::OpenFile(const std::wstring program_name) const
         HINSTANCE result = ShellExecuteW(nullptr, L"open", file_path.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
 
         if (reinterpret_cast<uintptr_t>(result) > 32) {
-            std::wcout << L"- App launched successfully." << std::endl;
+            std::wcout << L"- App launched successfully." << "\n";
         }
         else {
-            std::wcerr << L"- Failed with error code: " << reinterpret_cast<uintptr_t>(result) << std::endl;
+            std::wcerr << L"- Failed with error code: " << reinterpret_cast<uintptr_t>(result) << "\n";
         }
     }
     else {
-        std::wcerr << L"- File is not executable: " << file_path << std::endl;
+        std::wcerr << L"- File is not executable: " << file_path << "\n";
     }
 }
 
@@ -63,7 +63,7 @@ void F_LOGIC::FilesLogic::DeleteSFile(const std::wstring program_name)
 {
     // file path correction
     std::wstring file_path = current_path + L"\\" + program_name;
-    if (!std::filesystem::exists(file_path)) { std::wcout << L"- This file doesn't exist!"; return; }
+    if (!std::filesystem::exists(file_path)) { std::wcout << L"- This file doesn't exist!\n"; return; }
 
     // check if user is sure want to delete file
     std::wcout << L"- Are you sure want to delete file: " + program_name << std::endl;
@@ -92,10 +92,10 @@ void F_LOGIC::FilesLogic::RenameFile(const std::wstring program_name, const std:
     try {
         // Try to rename
         std::filesystem::rename(file_path, new_file_path);
-        std::wcout << L"- Done" << std::endl;
+        std::wcout << L"- Done" << "\n";
     }
     catch (const std::filesystem::filesystem_error& e) {
-        std::wcerr << L"- " << e.what() << std::endl;
+        std::wcerr << L"- " << e.what() << "\n";
     }
 }
 
@@ -125,7 +125,7 @@ void F_LOGIC::FilesLogic::WritePath(const std::wstring temp)
         std::wcout << L"- Done!\n";
     }
     else {
-        std::wcerr << L"- Incorrect Path!!\n";
+        std::wcerr << L"- Incorrect Path\n";
     }
 }
 
@@ -141,7 +141,7 @@ void F_LOGIC::FilesLogic::FileLists(std::vector<std::wstring>& current_files_lis
         }
     }
     catch (const std::filesystem::filesystem_error& e) {
-        std::wcerr << L"- Error accessing directory: " << e.what() << std::endl;
+        std::wcerr << L"- Error accessing directory: " << e.what() << "\n";
     }
 }
 
