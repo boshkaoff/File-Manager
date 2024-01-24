@@ -6,6 +6,8 @@
 #include <vector>
 #include <conio.h>
 #include "config.h"
+#include "Windows.h"
+
 
 enum class cmd_n
 {
